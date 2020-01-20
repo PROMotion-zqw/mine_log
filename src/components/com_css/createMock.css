@@ -1,0 +1,188 @@
+.api_info {
+    display: flex;
+    margin-top: 20px;
+    /* height: 80%; */
+  }
+  .api_info ul {
+    list-style: none;
+  }
+  .api_info ul li {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .api_info .api_result {
+    margin-left: 10px;
+    position: relative;
+    margin-top: 17px;
+  }
+  .api_info .api_result .tag_param {
+    position: absolute;
+    left: 3px;
+    top: -17px;
+    overflow: hidden;
+  }
+  .api_info .api_result .tag_param li {
+    /* font-size: 10px; */
+    padding: 1px 4px;
+    border-radius: 4px 4px 0px 0px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f9;
+    float: left;
+    border-bottom: none;
+    margin-right: 2px;
+    user-select: none;
+    line-height: 14px;
+  }
+  /* .api_info .api_result .tag_param li:hover {
+    background-color: #ebeaec;
+  } */
+  .api_info .api_result .api_param {
+    min-height: 300px;
+    max-height: 300px;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 4px;
+    /* overflow: auto; */
+    position: relative;
+  }
+  .api_info .api_result .api_param .labels {
+    overflow: hidden;
+  }
+  .api_info .api_result .api_param .text_data {
+      height: 254px;
+      overflow-y: auto;
+      overflow-x: hidden;
+  }
+  .api_info .api_result .api_param .text_data li {
+      padding: 0px;
+      /* padding-left: 7px; */
+      cursor: text;
+      overflow: hidden;
+      margin-right: -17px;
+  }
+  .api_info .api_result .api_param .text_data li .param_keys .ivu-input-small,
+  .api_info .api_result .api_param .text_data li .param_value .ivu-input-small {
+      border: none;
+      font-size: 12px;
+  }
+  .api_info .api_result .api_param .text_data li .param_keys,
+  .api_info .api_result .api_param .text_data li .param_value {
+      padding: 4px;
+      float: left;
+      width: 50%;
+  }
+  .api_info .api_result .api_param .text_data li .param_value {
+    padding-right: 19px;
+  }
+  .api_info .api_result .api_param .text_data li .param_keys {
+      border-right: 1px solid #ccc;
+  }
+  .api_info .api_result .api_param .param_header_key {
+    /* overflow: hidden;
+    position: absolute; */
+    width: 100%;
+    /* top: 0px;
+    left: 0px;
+    z-index: 1; */
+    background-color: white;
+  }
+  .api_info .api_result .api_param .param_header_key .header_key_title {
+      overflow: hidden;
+  }
+  .api_info .api_result .api_param .param_header_key .header_key_title li {
+      float: left;
+      font-size: 10px;
+      padding: 0px 4px;
+      border: none;
+  }
+  .api_info .api_result .api_param .labels li {
+    padding: 0px;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 7px;
+    font-size: 11px;
+    float: left;
+    width: 50%;
+    border-top: 1px solid #ccc;
+    cursor: default;
+  }
+  .api_info .api_result .api_param ul li:nth-child(1) {
+    border-right: 1px solid #ccc;
+  }
+  .api_info .api_result .api_data {
+    width: 100%;
+    border-radius: 4px;
+    /* height: 58%; */
+    border: 1px solid #ccc;
+    margin-top: 8px;
+    padding: 8px;
+    overflow: auto;
+  }
+  .rq_current {
+    background-color: #ede9af;
+  }
+  .api_info .api_result .tag_param .tag_current {
+    background-color: #ede9af;
+    border: 1px solid #c9c478;
+  }
+  .path_table {
+    width: 300px;
+    min-width: 300px;
+    height: 100%;
+    border: 1px solid #ccc;
+    /* overflow: auto; */
+    border-radius: 4px;
+  }
+  .mock_box {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+  }
+  .api_info .path_tools {
+    padding: 0px 0px;
+  }
+  .api_info .path_tools ul:nth-child(1) {
+    overflow: hidden;
+    background-color: #f8f8f9;
+  }
+  .api_info .path_tools_item {
+    padding: 0px 5px;
+    float: left;
+  }
+  .api_info .path_tools_item:hover {
+    background-color: #ebeaec;
+  }
+  .path_api {
+    position: relative;
+  }
+  .api_edit {
+    position: absolute;
+    right: 0px;
+    margin-right: 20px;
+  }
+  .api_edit i {
+    padding: 0px 4px;
+  }
+  /* .mock_box .path_add .ivu-card-bordered {
+    background-color: orange;
+  } */
+  .mock_box .path_add {
+    position: fixed;
+    left: 50%;
+    top: 40px;
+    z-index: 3;
+    transform: translateX(-50%);
+  }
+
+  .api_info .api_result .api_param .param_header_key .ivu-select-dropdown-list li {
+    border: none;
+  }
+
+  /* .api_info .api_result .api_param .param_header_key
+  .ivu-select-small.ivu-select-single .ivu-select-selection {
+    border: none;
+  } */

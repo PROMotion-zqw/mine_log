@@ -1,0 +1,22 @@
+html, body {
+    height: 100%;
+}
+.ivu-menu-vertical.ivu-menu-light:after {
+    background: #ccc;
+    width: 0px;
+}
+/* .ivu-menu-vertical.ivu-menu-light li {
+    border-right: 1px solid #ccc;
+} */
+.ivu-input {
+    font-size: 13px;
+    font-weight: 600;
+}
+.min_stl .ivu-input-default {
+    border-radius: 0px;
+    padding-right: 65px;
+}
+
+.fls2 .content_text .item_users .ivu-table-overflowX {
+    overflow: hidden;
+}
