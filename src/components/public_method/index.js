@@ -69,3 +69,87 @@ export function postWord(that, param, fn) {
             console.log("login ERR", err);
         });
 }
+
+function ajax() {
+    var ajaxData = {
+        method: (arguments[0].type || "GET").toUpperCase(),
+        url: arguments[0].url || "",
+        async: arguments[0].async || "true",
+        data: arguments[0].data || null,
+        responseType: arguments[0].dataType || "json",
+        contentType: arguments[0].contentType || "application/x-www-form-urlencoded; charset=utf-8",
+        beforeSend: arguments[0].beforeSend || function () { },
+        success: arguments[0].success || function () { },
+        error: arguments[0].error || function () { }
+    }
+
+    ajaxData.beforeSend()
+    var xhr = createxmlHttpRequest();
+    xhr.responseType = ajaxData.dataType;
+
+    xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
+    xhr.setRequestHeader("Content-Type", ajaxData.contentType);
+    xhr.send(convertData(ajaxData.data));
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                ajaxData.success(xhr.response)
+            } else {
+                ajaxData.error()
+            }
+        }
+    }
+}
+
+function createxmlHttpRequest() {
+    if (window.ActiveXObject) {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    } else if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+}
+
+function convertData(data) {
+    if (typeof data === 'object') {
+        var convertResult = "";
+        for (var c in data) {
+            convertResult += c + "=" + data[c] + "&";
+        }
+        convertResult = convertResult.substring(0, convertResult.length - 1)
+        return convertResult;
+    } else {
+        return data;
+    }
+}
+
+function downloadMp3(obj) {
+
+    ajax({
+    type: "GET",
+    url: `/gettts?lan=${obj.model}&text=${obj.name}&spd=3&source=web`,
+    dataType: "arraybuffer",
+    success: function (res) {
+              console.log("audio", res);
+              let blob = new Blob([res], {
+                type: "audio/mpeg;charset=utf-8"
+              });
+              let fileName = obj.name+".mp3";
+              if ("download" in document.createElement("a")) {
+                // 非IE下载
+                let elink = document.createElement("a");
+                elink.download = fileName;
+                elink.style.display = "none";
+                elink.href = URL.createObjectURL(blob);
+                // document.body.appendChild(elink);
+                elink.click();
+                URL.revokeObjectURL(elink.href); // 释放URL 对象
+                // document.body.removeChild(elink);
+              } else {
+                // IE10+下载
+                navigator.msSaveBlob(blob, fileName);
+              }
+    }
+    })
+    
+    }
