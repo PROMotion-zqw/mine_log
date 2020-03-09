@@ -36,7 +36,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
+  next()
   // if (to.name !== "login") {
     getUser({ $http: Axios }, () => {
       next()

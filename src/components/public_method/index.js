@@ -54,3 +54,18 @@ export function MonitorSize(fn) {
 export function keyDowns(fn) {
     document.body.onkeydown = fn
 }
+
+export function postWord(that, param, fn) {
+    that.$http({
+        url: "/api/addWord" + (param.method === "get" ? param.data : ""),
+        method: param.method,
+        data: param.data
+    })
+        .then(rs => {
+            fn && fn(true, rs)
+        })
+        .catch(err => {
+            fn && fn(false, err)
+            console.log("login ERR", err);
+        });
+}

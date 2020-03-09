@@ -4,6 +4,7 @@
   /* max-width: 240px;
   min-width: 240px; */
   float: left;
+  z-index: 1;
   height: 100%;
   padding-bottom: 78px;
   position: relative;
@@ -11,12 +12,12 @@
 }
 .drags {
   position: absolute;
-  right: -12px;
+  right: -17px;
   /* color: #7d7979; */
   top: 0px;
   text-align: center;
   z-index: 900;
-  width: 12px;
+  width: 17px;
   background-color: #f6efef;
   border: 1px solid #e9e2e2;
   font-size: 10px;
@@ -37,9 +38,9 @@
   width: 6px;
 }
 .Sider_uls::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 100px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 /* .drags:hover {
   background-color: #a8bbf4;
@@ -60,7 +61,7 @@
         <template slot="title">
           <Icon type="ios-people" />用户管理
         </template>
-        <MenuItem name="1-1">用户列表</MenuItem>
+        <MenuItem ref="newUser" name="1-1">用户列表</MenuItem>
         <MenuItem name="1-2">新增用户</MenuItem>
       </Submenu>
       <Submenu name="2">
@@ -75,7 +76,15 @@
         </template>
         <MenuItem name="3-1">API</MenuItem>
       </Submenu>
-      <MenuItem name>退出</MenuItem>
+      <Submenu name="4">
+        <template slot="title">
+          <Icon type="ios-book" />Words
+        </template>
+        <MenuItem name="4-1">单词本</MenuItem>
+      </Submenu>
+      <MenuItem name>
+        <Icon size="20" type="md-log-out" />退出
+      </MenuItem>
     </Menu>
     <span
       :style="{height: dragBox+'px', lineHeight: dragBox+'px', cursor: listShow ? 'ew-resize' : 'pointer'}"
@@ -92,7 +101,7 @@
 import { MonitorSize } from "./public_method/index";
 import { format } from "path";
 export default {
-  props: ["screen", "action_index"],
+  props: ["screen", "action_index", "autoToggle"],
   data() {
     return {
       isCollapsed: false,
@@ -178,6 +187,13 @@ export default {
       if (n) {
         this.action_names = this.action_index;
         this.Menu_index = this.action_index.split("-")[0];
+      }
+    },
+    autoToggle: function(n) {
+      if (n) {
+        if ("newUser" in this.$refs) {
+          this.$refs.newUser.$el.click();
+        }
       }
     }
   }

@@ -20,3 +20,38 @@ html, body {
 .fls2 .content_text .item_users .ivu-table-overflowX {
     overflow: hidden;
 }
+
+.ivu-list-bordered.ivu-list-small .ivu-list-footer,
+.ivu-list-bordered.ivu-list-small .ivu-list-header {
+  font-weight: bold;
+}
+.ivu-list-bordered.ivu-list-small .ivu-list-header {
+    background-color: #eaeeef;
+    border-bottom: 1px solid #c8c1c1;
+}
+.ivu-list-bordered.ivu-list-small .ivu-list-item.y_en {
+    display: block;
+    height: 230px;
+    overflow-y: auto;
+}
+.ivu-list-bordered.ivu-list-small .ivu-list-item.y_en2 {
+    display: block;
+    position: relative;
+}
+.ivu-list-bordered.ivu-list-small .ivu-list-footer, .ivu-list-bordered.ivu-list-small .ivu-list-header {
+    padding: 0px;
+}
+.mine_diver.ivu-divider.ivu-divider-horizontal.ivu-divider-default.ivu-divider-with-text.ivu-divider-with-text-center {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.ivu-form-inline .ivu-form-item.ds_box {
+    width: 100%;
+}
+
+/*搜索单词*/
+.SearchInt .ivu-input {
+    background-color: #fff;
+}
+
+
