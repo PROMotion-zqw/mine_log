@@ -6,7 +6,21 @@
     <div class="path_add">
       <Card :bordered="true" style="overflow: hidden;padding-bottom: 14px" v-if="add_path.isShow">
         <p slot="title">添加接口 API</p>
-        <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
+        <p>
+          <div style="width: 350px">
+          <div style="margin-bottom: 4px;font-weight: 600">请求类型</div>
+          <CheckboxGroup v-model="addApiBox.type">
+            <Checkbox label="GET" border></Checkbox>
+            <Checkbox label="POST" border></Checkbox>
+            <Checkbox label="DELETE" border></Checkbox>
+            <Checkbox label="PUT" border></Checkbox>
+          </CheckboxGroup>
+          <div style="margin-bottom: 4px;font-weight: 600">URL</div>
+            <Input v-model="addApiBox.url" placeholder="create request url" style="width: 300px" />
+          <div style="margin-bottom: 4px;font-weight: 600">roles</div>
+            <Input v-model="addApiBox.roles" placeholder="roles" style="width: 300px" />
+          </div>
+        </p>
         <p style="float: right">
           <Button style="margin-right: 10px" @click="addApi('cancel')">取消</Button>
           <Button type="primary" @click="addApi('add')">添加</Button>
@@ -176,11 +190,17 @@
 </template>
 <script>
 import { log } from "util";
-import { keyDowns, Types } from "../public_method/index";
+import { keyDowns, Types, deepClone } from "../public_method/index";
 export default {
   props: ["screen"],
   data() {
     return {
+      addApiBox: {
+        type: ["GET"],
+        url: "",
+        headers: {},
+        roles: ""
+      },
       flag_H: 0,
       dataType: "",
       h: 545,
@@ -359,21 +379,21 @@ export default {
             )
           ) {
             head.data = this.headerParam(this.param_list);
-            if(this.dataType === "form-data") {
+            if (this.dataType === "form-data") {
               let newFormData = new FormData();
               Object.keys(head.data).filter((streamItem, streamIndex) => {
-                newFormData.append(streamItem, head.data[streamItem])
-              })
+                newFormData.append(streamItem, head.data[streamItem]);
+              });
               head.data = newFormData;
-              console.log('form-data', newFormData.get('name'));
-              
+              console.log("form-data", newFormData.get("name"));
             }
             Object.keys(head.data).filter((parItem, parIndex) => {
               head.data[parItem] = this.parData(head.data[parItem]);
             });
           }
         }
-        // return
+        console.log("heads", head);
+        // return;
         this.$http(head)
           .then(res => {
             // console.log("res", res);
@@ -420,7 +440,29 @@ export default {
       return headers;
     },
     addApi(str) {
-      this.add_path.isShow = false;
+      if(str === "add") {
+        let dataBody = JSON.parse(JSON.stringify(this.addApiBox))
+        dataBody.roles = Number(dataBody.roles);
+        // this.addApiBox.type = [];
+        // this.addApiBox = deepClone({data: this.addApiBox, model: "empty"});
+        this.$http({
+          url: "/api/create_api",
+          method: "post",
+          data: dataBody
+        }).then(res => {
+          this.$Message.error("添加成功");
+          this.addApiBox.type = [];
+          this.addApiBox = deepClone({data: this.addApiBox, model: "empty"});
+          this.add_path.isShow = false;
+          this.getApiTable();
+        }).catch(err => {
+          this.$Message.error("添加失败");
+          this.add_path.isShow = false;
+        })
+      }else {
+          this.add_path.isShow = false;
+      }
+      // this.add_path.isShow = false;
     },
     defaultHeaderAppend(n) {
       let content = false,
@@ -441,7 +483,6 @@ export default {
           this.header_list = [{ key: "", value: "" }];
           break;
         case "form-data":
-
           break;
         case "x-www-form-urlencoded":
           this.defaultHeaderAppend({
@@ -521,8 +562,8 @@ export default {
       deep: true
     },
     dataType: function(n) {
-      console.log('data y', n);
-      
+      console.log("data y", n);
+
       this.isRaw = false;
       this.watchDataType(n);
     },
