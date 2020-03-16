@@ -33,7 +33,7 @@ export const keyValue = {
 export function getUser(opt, fn, fns) {
     opt.$http({
         method: "get",
-        url: "/api/getUser?page=1&pageSize=10"
+        url: "/api/getUser?page=1&pageSize=1"
     })
         .then(res => {
             fn && fn()
@@ -70,6 +70,41 @@ export function postWord(that, param, fn) {
         });
 }
 
+export function deepClone(obj) {
+    switch (Types(obj.data)) {
+        case "Array":
+            let Arr = [];
+            obj.data.filter((v, i) => {
+                Arr.push(deepClone({ data: v, model: obj.model }))
+            })
+            return Arr;
+            break;
+        case "Object":
+            let Obs = {};
+            for (var k in obj.data) {
+                Obs[k] = deepClone({ data: obj.data[k], model: obj.model })
+            }
+            return Obs;
+            break;
+        case "Function":
+            return obj.data
+            break;
+        case "String":
+            if (obj.model && obj.model === "empty") {
+                return ""
+            }
+            return obj.data
+            break;
+        case "Number":
+            return obj.data
+            break;
+        case "Null":
+            return null;
+            break;
+        default:
+    }
+}
+
 function ajax() {
     var ajaxData = {
         method: (arguments[0].type || "GET").toUpperCase(),
@@ -85,9 +120,8 @@ function ajax() {
 
     ajaxData.beforeSend()
     var xhr = createxmlHttpRequest();
-    xhr.responseType = ajaxData.dataType;
-
-    xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
+    xhr.responseType = ajaxData.responseType;
+    xhr.open(ajaxData.method, ajaxData.url, ajaxData.async);
     xhr.setRequestHeader("Content-Type", ajaxData.contentType);
     xhr.send(convertData(ajaxData.data));
 
@@ -126,16 +160,16 @@ function convertData(data) {
 function downloadMp3(obj) {
 
     ajax({
-    type: "GET",
-    url: `/gettts?lan=${obj.model}&text=${obj.name}&spd=3&source=web`,
-    dataType: "arraybuffer",
-    success: function (res) {
-              console.log("audio", res);
-              let blob = new Blob([res], {
+        type: "GET",
+        url: `/gettts?lan=${obj.model}&text=${obj.name}&spd=3&source=web`,
+        dataType: "arraybuffer",
+        success: function (res) {
+            console.log("audio", res);
+            let blob = new Blob([res], {
                 type: "audio/mpeg;charset=utf-8"
-              });
-              let fileName = obj.name+".mp3";
-              if ("download" in document.createElement("a")) {
+            });
+            let fileName = obj.name + ".mp3";
+            if ("download" in document.createElement("a")) {
                 // 非IE下载
                 let elink = document.createElement("a");
                 elink.download = fileName;
@@ -145,11 +179,11 @@ function downloadMp3(obj) {
                 elink.click();
                 URL.revokeObjectURL(elink.href); // 释放URL 对象
                 // document.body.removeChild(elink);
-              } else {
+            } else {
                 // IE10+下载
                 navigator.msSaveBlob(blob, fileName);
-              }
-    }
+            }
+        }
     })
-    
-    }
+
+}

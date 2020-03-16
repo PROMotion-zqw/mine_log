@@ -129,7 +129,6 @@ export default {
     });
   },
   created() {
-    this.getAddApi();
   }
 };
 </script>
