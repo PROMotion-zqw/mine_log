@@ -46,6 +46,7 @@
 .total_length {
   position: absolute;
   right: 16px;
+  font-size: 16px;
 }
 .word_item_box {
   width: 50%;
@@ -133,6 +134,9 @@
   z-index: 1;
   height: 100%;
   background-color: grey;
+}
+.title_Left {
+  font-size: 16px;
 }
 </style>
 <template>
